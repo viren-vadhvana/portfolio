@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="My Projects" />
+  <title>Projects — Viren Vadhvana</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!--GLOBAL HEADER-->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="site-logo">Viren Vadhvana</a>
+      <nav class="site-nav">
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT-->
+  <main class="page-content">
+    <div class="container">
+
+      <!-- Page Header -->
+      <div class="page-header fade-in">
+        <h1>Projects</h1>
+        <p>Set the tone for projects</p>
+      </div>
+
+      <!-- Controls: Search & Tag Filters -->
+      <div class="controls fade-in fade-in-delay-1">
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input type="text" id="project-search" class="search-input" placeholder="Search projects or tags…"
+            autocomplete="off" />
+        </div>
+
+        <div class="filter-dropdown">
+          <button id="filter-toggle" class="filter-toggle-btn">
+            Filter <span class="filter-count"></span> <span class="chevron">▼</span>
+          </button>
+          <div id="filter-panel" class="filter-panel">
+            <div class="filter-checklist" id="filter-checklist">
+              <!-- Populated dynamically from tags.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-grid fade-in fade-in-delay-2">
+        <!-- Populated dynamically from projects-data.js -->
+        <div class="no-results">
+          <p>No projects match your search. Try a different query or tag.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>Viren Vadhvana · 2026</p>
+  </footer>
+
+  <script src="tags.js"></script>
+  <script src="projects-data.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
