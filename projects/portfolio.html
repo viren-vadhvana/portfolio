@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio details" />
+  <title>Project One — Viren Vadhvana</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body>
+
+  <!-- GLOBAL HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="site-logo">Viren Vadhvana</a>
+      <nav class="site-nav">
+        <a href="../projects.html" class="nav-link">Projects</a>
+        <a href="../about.html" class="nav-link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="page-content">
+    <div class="container project-page">
+
+      <!-- Header Nav: Back Link (Left) & Demo/GitHub Links (Right) -->
+      <div class="project-header-nav fade-in">
+        <a href="../projects.html" class="back-link">
+          ← Back to Projects
+        </a>
+
+        <div class="project-links">
+          <a href="https://github.com/viren-vadhvana/portfolio" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+          <a href="https://viren-vadhvana.github.io/portfolio" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Live Demo</a>
+        </div>
+      </div>
+
+      <!-- Cover Image -->
+      <img src="../assets/images/portfolio.png" alt="Portfolio cover art"
+        class="project-hero-img fade-in fade-in-delay-1" />
+
+      <!-- Title -->
+      <h1 class="fade-in fade-in-delay-2">Portfolio</h1>
+
+      <!-- Tags -->
+      <div class="project-meta fade-in fade-in-delay-2">
+        <span class="tag-pill">Web</span>
+        <span class="tag-pill">JavaScript</span>
+        <span class="tag-pill">In Progress</span>
+      </div>
+
+      <div class="project-body fade-in fade-in-delay-3">
+
+        <h2>Overview</h2>
+        <p>
+          A simple, static website showcasing my projects and documenting their development lifecycle. Also, some
+          personal info about my interests and academic/professional background.
+        </p>
+
+        <!-- Design -->
+        <h2>Design</h2>
+        <p>
+          I built this portfolio out of the desire to showcase the full range of my projects and to document their
+          lifecycle. Many of my projects are not publicly available on my GitHub to avoid any potential issues with
+          IP or academic misconduct (and some are just old and bad!).
+        </p>
+        <p>
+          While I typically begin design stages researching similar websites for inspiration, I wanted to keep this
+          portfolio simple and personable. I had two separate initial ideas: creating a CLI style and a more visual
+          card-based approach. Although creative and handy for things like "get-CV", the CLI-based approach seemed
+          less accessible to a general audience. The card-based approach was also much more visually appealing and
+          conveyed more information.
+
+
+        </p>
+
+        <!-- Implementation -->
+        <h2>Implementation</h2>
+        <p>
+          There's nothing particularly interesting about the implementation. I decided to build this website using
+          vanilla
+          CSS and JS to keep it lightweight and simple to deploy. I could have used something like a framework like
+          React
+          to make it more maintainable, but there are no plans to extend the website. I used Gemini to help me with a
+          custom
+          dark colour theme and a monospaced typography. There wasn't any need to use it for anything else.
+        </p>
+        <p>
+          I created custom tags to allow for projects to be filtered. These tags are defined in <code>tags.js</code>
+          and
+          organised by category. I added a dynamic search that allows users to search for projects by name or
+          description.
+          Additionally, the tags can also be searched if someone is looking for a particular skill quickly.
+        </p>
+
+
+        </p>
+
+        <!-- Reflections -->
+        <h2>Reflections</h2>
+        <p>
+          I'm glad I chose a clean visual aesthetic over a CLI-based design. It's much more user-friendly and
+          allows me to showcase my projects in a more engaging way. Due to the simplicity, I didn't face any real
+          challenges
+          (except colour matching and centering divs) and was able to get a working website quickly and focus on the
+          "blogging"
+          side. At the current scale, the two main tabs and search/filter functionality are more than adequate.
+
+          There aren't any planned enhancements although it's regretabble I didn't showcase my projects on a "creative"
+          site.
+          The hope is that other projects convey that well enough.
+        </p>
+
+      </div>
+
+
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>Last updated: Loading...</p>
+  </footer>
+
+  <script src="../tags.js"></script>
+  <script src="../script.js"></script>
+</body>
+
+</html>

@@ -7,11 +7,11 @@ If `image` is omitted or empty, `assets/images/default-cover.png` is automatical
 
 const PROJECTS_DATA = [
   {
-    slug: "project-1",
-    title: "Project One",
-    description: "Short summary and description of Project One.",
-    tags: ["Backend", "Python", "Completed"],
-    image: "assets/images/default-cover.png"
+    slug: "portfolio",
+    title: "Portfolio",
+    description: "The journey of the creation of my portfolio (this website!)",
+    tags: ["Web", "JavaScript", "In Progress"],
+    image: "assets/images/portfolio.png"
   },
   {
     slug: "project-2",
