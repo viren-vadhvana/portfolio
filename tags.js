@@ -20,7 +20,7 @@ const TAG_CONFIG = {
     {
       name: "Domain",
       color: "#f59e0b",
-      tags: ["Security", "Finance", "Games", "AI/ML", "Systems"]
+      tags: ["Security", "Finance", "Games", "AI/ML", "Systems", "Web"]
     },
     {
       name: "Progress",

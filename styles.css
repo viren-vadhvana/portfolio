@@ -641,6 +641,15 @@ p {
   margin-inline: auto;
 }
 
+.project-header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-8);
+}
+
 .project-page .back-link {
   display: inline-flex;
   align-items: center;
@@ -648,7 +657,6 @@ p {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--clr-text-muted);
-  margin-bottom: var(--sp-8);
   transition: color var(--t-fast);
 }
 
@@ -759,11 +767,9 @@ p {
 /* Project links */
 .project-links {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: var(--sp-3);
-  margin-top: var(--sp-10);
-  padding-top: var(--sp-8);
-  border-top: 1px solid var(--clr-border);
 }
 
 
