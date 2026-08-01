@@ -14,17 +14,31 @@ const PROJECTS_DATA = [
     image: "assets/images/portfolio.png"
   },
   {
-    slug: "project-2",
-    title: "Project Two",
-    description: "Short summary and description of Project Two.",
-    tags: ["Full-Stack", "JavaScript", "In Progress"],
-    image: "assets/images/default-cover.png"
+    slug: "fpl",
+    title: "FP&L",
+    description: "Tool to suggest optimal squad selections and transfers for Fantasy Premier League.",
+    tags: ["AI/ML", "Python", "In Progress"],
+    image: "assets/images/premierleague.png"
   },
   {
-    slug: "project-3",
-    title: "Project Three",
-    description: "Short summary and description of Project Three.",
-    tags: ["Security", "Go", "Concept"]
-    // image omitted -> automatically uses default-cover.png
+    slug: "footychips",
+    title: "Footychips",
+    description: "Tournament predictions, match bets, and community leaderboards platform for football tournaments.",
+    tags: ["Web", "JavaScript", "Full-Stack", "In Progress"],
+    image: "assets/images/footychips.png"
+  },
+  {
+    slug: "bitcoin-classifier",
+    title: "Illicit Bitcoin Transaction Classifier",
+    description: "Temporal Graph Neural Networks (tGNNs) on the Elliptic dataset detecting illicit transactions enriched with sentiment and market volatility.",
+    tags: ["AI/ML", "Python", "Security", "Completed"],
+    image: "assets/images/bitcoin.png"
+  },
+  {
+    slug: "poker-bot",
+    title: "Poker Bot Tournament",
+    description: "Simulated multi-agent poker tournament platform evaluating game theory strategies and automated poker bots.",
+    tags: ["AI/ML", "Python", "Games", "Completed"],
+    image: "assets/images/poker-bot.png"
   }
 ];
