@@ -38,7 +38,7 @@
 
       html += `
         <a
-          href="projects/${proj.slug}.html"
+          href="projects/${proj.slug}"
           class="project-card"
           data-title="${proj.title}"
           data-tags="${tagsAttr}"
@@ -223,18 +223,41 @@
 
   function initActiveNav() {
     const navLinks = document.querySelectorAll('.nav-link');
-    const currentPath = window.location.pathname;
+    const currentPath = window.location.pathname.replace(/\/$/, '');
 
     navLinks.forEach(link => {
-      const href = link.getAttribute('href');
+      const rawHref = link.getAttribute('href') || '';
+      const href = rawHref.replace('.html', '').replace('../', '').replace('./', '');
 
       if (
+        currentPath.endsWith('/' + href) ||
         currentPath.endsWith(href) ||
-        (href === 'projects.html' && currentPath.includes('/projects/'))
+        (href === 'projects' && currentPath.includes('/projects'))
       ) {
         link.classList.add('active');
       }
     });
+  }
+
+  /* Automatically handle clean URLs on GitHub Pages while enabling local server testing */
+  function initCleanUrls() {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+    if (isLocal) {
+      document.querySelectorAll('a[href]').forEach(a => {
+        const href = a.getAttribute('href');
+        if (
+          href &&
+          !href.startsWith('http') &&
+          !href.startsWith('#') &&
+          !href.endsWith('.html') &&
+          !href.endsWith('.pdf') &&
+          !href.endsWith('/') &&
+          href !== '.'
+        ) {
+          a.setAttribute('href', href + '.html');
+        }
+      });
+    }
   }
 
 
@@ -284,6 +307,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     buildProjectGrid();
     initHeaderScroll();
+    initCleanUrls();
     initActiveNav();
     colorTagPills();
     initProjectFilters();

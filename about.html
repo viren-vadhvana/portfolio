@@ -14,10 +14,10 @@
   <!--GLOBAL HEADER-->
   <header class="site-header">
     <div class="container">
-      <a href="index.html" class="site-logo">Viren Vadhvana</a>
+      <a href="." class="site-logo">Viren Vadhvana</a>
       <nav class="site-nav">
-        <a href="projects.html" class="nav-link">Projects</a>
-        <a href="about.html" class="nav-link">About</a>
+        <a href="projects" class="nav-link">Projects</a>
+        <a href="about" class="nav-link">About</a>
       </nav>
     </div>
   </header>
@@ -27,12 +27,154 @@
     <div class="container">
       <div class="about-content">
 
-        <h1 class="fade-in">About</h1>
+        <div class="about-header fade-in">
+          <h1>About Me</h1>
+          <a href="assets/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Download Resume
+          </a>
+        </div>
 
         <p class="about-intro fade-in fade-in-delay-1">
-          Things about me blah blah
-          <span style="color: var(--clr-accent);">blah</span>.
+          I graduated from the University of Nottingham in July 2026 with a
+          <span style="color: var(--clr-accent);">First Class Honours Masters degree in Computer Science</span>.
+          I also completed a 12-month placement at
+          <span style="color: var(--clr-accent);">D. E. Shaw & Co.</span>
+          during this time.
         </p>
+
+        <p class="about-intro fade-in fade-in-delay-1">
+          As you'll see below, I have a diverse range of interests and have enjoyed working across different areas of
+          computer science.
+          Most prominently, I'm interested in AI and security, particularly in the context of finance.
+          In my spare time, I enjoy coming up with creative project ideas I'll never get around to.
+          Occasionally, I turn off my computer to be active and touch grass - I enjoy playing most sports and martial
+          arts!
+          For a more relaxed evening, I enjoy reading, playing the piano or watching Netflix.
+        </p>
+
+        <h3 class="fade-in fade-in-delay-2" style="margin-top: var(--sp-6); margin-bottom: var(--sp-4);">Academic
+          Project Highlights</h3>
+
+        <div class="fade-in fade-in-delay-2">
+
+          <!-- Software Development -->
+          <details class="about-dropdown" open>
+            <summary class="about-dropdown-summary">
+              <span>Software Development</span>
+              <span class="dropdown-chevron">▼</span>
+            </summary>
+            <ul>
+              <li><strong>Reversi/Othello:</strong> Built the game in Java featuring dual-window local
+                multiplayer and a greedy AI opponent.</li>
+              <li><strong>DVD Store Database:</strong>Architected a database schema for a DVD store and implemented
+                using MySQL. Interfaced with a simple static website.</li>
+              <li><strong>Sudoku Solver:</strong> Created a highly efficient Sudoku solver in Haskell</li>
+              <li><strong>Monadic Compiler</strong> Implemented a compiler in Haskell utilising monads</li>
+              <li><strong>Native Android Apps:</strong> Built an MP3 player, interactive game, and GPS running tracker
+                in Java and Kotlin.</li>
+              <li><strong>Cybersecurity Dashboard:</strong> Built an ESRC-backed tool visualising cyber threat
+                vulnerabilities for a specific company and suggesting countermeasures providing optimal ROI given a set
+                of constraints. </li>
+              <li><strong>UI/UX Prototyping:</strong> Designed a funfair app prototype in Figma backed by ethnographic
+                research and heuristic usability evaluations.</li>
+              <li><strong>Software Specification:</strong> Authored a complete requirements and stakeholder
+                specification for a real estate application.</li>
+            </ul>
+          </details>
+
+          <!-- Data Science & AI/ML -->
+          <details class="about-dropdown">
+            <summary class="about-dropdown-summary">
+              <span>Data Science and AI/ML</span>
+              <span class="dropdown-chevron">▼</span>
+            </summary>
+            <ul>
+              <li><strong>Classifying Illicit Bitcoin Transactions:</strong> Trained temporal Graph Neural Networks
+                (tGNNs)
+                on the Elliptic dataset to detect illicit transactions, enriched with news sentiment and market
+                volatility.</li>
+              <li><strong>Conversational NLP Flight Bot:</strong> Built a flight-booking chatbot using NLP, focusing on
+                user experience,
+                AI explainability and contextual error handling.</li>
+              <li><strong>Air Quality Prediction:</strong> Trained and evaluated classical machine learning models
+                (linear regression, random forests, SVMs etc.) to predict air quality over time. </li>
+              <li><strong>Mushroom Classification:</strong> Trained and evaluated classical machine learning models
+                (logistic regression, decision trees, KNN etc.) to classify mushrooms as edible or poisonous.</li>
+              <li><strong>Breast Cancer Classification:</strong> Applied deep learning techniques to the breast cancer
+                dataset to classify malignant and benign tumours
+              </li>
+              <li><strong>Flower Classification:</strong>Trained and evaluated various models to classify flowers using
+                the classic Iris dataset.</li>
+            </ul>
+          </details>
+
+          <!-- Security -->
+          <details class="about-dropdown">
+            <summary class="about-dropdown-summary">
+              <span>Security</span>
+              <span class="dropdown-chevron">▼</span>
+            </summary>
+            <ul>
+              <li><strong>Pen-Testing a Vulnerable Ubuntu Server:</strong> Assessed a server's security using various
+                attacking techinques
+                (packet-sniffing, password cracking, SQL-injection, privilege escalation, etc.) and then secured against
+                vulnerabilities
+                (setting up encryption, access-control, iptables/firewalls, antivirus, updates etc.)</li>
+              <li><strong>Accountability in Algorand:</strong> Solved the non-attribution flaw in Algorand using Timed
+                VRFs and
+                added a reputation metric to disincentivise malicious behaviour. I then proved by simulation that the
+                "Proof of Effective Stake" consensus mechanism
+                effectively disincentivised adversarial behaviour.</li>
+              <li><strong>Decentralised Mixing Protocol:</strong> Designed a theoretical mixing protocol with
+                mathematical
+                proof that pseudonymity is maintained under coordinated adversarial attack models.</li>
+              <li><strong>Implemented Ciphers:</strong> Implemented various ciphers and cryptographic primitives. E.g.
+                DES, AES-GCM, ChaCha20, Trivium, and XTS.</li>
+            </ul>
+          </details>
+
+          <!-- Hardware & Low-Level -->
+          <details class="about-dropdown">
+            <summary class="about-dropdown-summary">
+              <span>Hardware and Low-level</span>
+              <span class="dropdown-chevron">▼</span>
+            </summary>
+            <ul>
+              <li><strong>ARM Assembly Minesweeper:</strong> Wrote an ASCII-based Minesweeper game entirely in
+                ARM assembly with manual register and memory management.(Komodo for visualisation)</li>
+              <li><strong>Ultrasonic Carriage Counter:</strong> Built a rule-based, real-time footfall tracking system
+                for a train carriage using
+                a Raspberry Pi, a GrovePi board, and ultrasonic/PIR sensors.</li>
+              <li><strong>OS Scheduling Algorithm:</strong> Implemented a scheduling algorithm with a priority queue,
+                using semaphores and mutexes to lock processes, plus
+                paging and segmentation memory management.</li>
+            </ul>
+          </details>
+
+          <!-- Math & Theory -->
+          <details class="about-dropdown">
+            <summary class="about-dropdown-summary">
+              <span>Math and Theory</span>
+              <span class="dropdown-chevron">▼</span>
+            </summary>
+            <ul>
+              <li><strong>Interactive Theorem Proofs:</strong> Formulated and verified formal proofs using the Lean
+                proof
+                assistant and discrete logic.</li>
+              <li><strong>Data Structures & Algorithms:</strong> Implemented custom Red-Black trees, Merkle trees,
+                min-heaps, graph algorithms, and hashing from scratch.</li>
+              <li><strong>Optimisation & Linear Programming:</strong> Solved bin-packing and network flow optimization
+                problems using Python's PuLP library and Excel/LP Code solvers.</li>
+              <li><strong>Finite Automata and Turing Machines:</strong> Analyzed computational limits using finite state
+                automata,
+                Turing machines, and Master Theorem complexity analysis.</li>
+              <li><strong>Essay on the Ethics of Cryptocurrency Mixers:</strong> Authored an analytical essay examining
+                cryptocurrency mixers
+                through diverse ethical and regulatory frameworks.</li>
+            </ul>
+          </details>
+
+        </div>
 
       </div>
     </div>
@@ -40,7 +182,7 @@
 
   <!--FOOTER -->
   <footer class="site-footer">
-    <p>Viren Vadhvana · 2026</p>
+    <p>Last updated: ...</p>
   </footer>
 
   <script src="tags.js"></script>
