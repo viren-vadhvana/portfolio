@@ -9,22 +9,22 @@ const TAG_CONFIG = {
   categories: [
     {
       name: "Language",
-      color: "#22c55e",
-      tags: ["Python", "JavaScript", "TypeScript", "Java", "Go", "C++"]
-    },
-    {
-      name: "Stack",
-      color: "#3b82f6",
-      tags: ["Backend", "Frontend", "Full-Stack", "API", "WebSockets"]
+      color: "#00ff0dff",
+      tags: ["Python", "JavaScript", "TypeScript", "Java", "Go", "ARM Assembly"]
     },
     {
       name: "Domain",
-      color: "#f59e0b",
-      tags: ["Security", "Finance", "Games", "AI/ML", "Systems", "Web"]
+      color: "#fc0800ff",
+      tags: ["Security", "Finance", "Games", "AI/ML", "Systems", "Web", "Blockchain"]
+    },
+    {
+      name: "Misc",
+      color: "#00e1ffff",
+      tags: ["Competitions", "University", "Personal"]
     },
     {
       name: "Progress",
-      color: "#ed3535ff",
+      color: "#b505faff",
       tags: ["Completed", "In Progress", "Concept"]
     }
   ]

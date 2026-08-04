@@ -729,11 +729,10 @@ p {
 }
 
 .project-page .project-body figure img {
-  width: 60%;
+  max-width: 60%;
+  height: auto;
   margin-inline: auto;
   display: block;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
   border-radius: var(--radius-md);
   border: 1px solid var(--clr-border);
 }
