@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ARM Minesweeper project details" />
+    <title>ARM Minesweeper — Viren Vadhvana</title>
+    <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body>
+
+    <!-- GLOBAL HEADER -->
+    <header class="site-header">
+        <div class="container">
+            <a href="../" class="site-logo">Viren Vadhvana</a>
+            <nav class="site-nav">
+                <a href="../projects" class="nav-link">Projects</a>
+                <a href="../about" class="nav-link">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="page-content">
+        <div class="container project-page">
+
+            <!-- Header Nav: Back Link (Left) & Demo/GitHub Links (Right) -->
+            <div class="project-header-nav fade-in">
+                <a href="../projects" class="back-link">
+                    ← Back to Projects
+                </a>
+
+                <div class="project-links">
+                    <a href="https://github.com/viren-vadhvana/arm-minesweeper.git" class="btn btn-primary">View on
+                        GitHub →</a>
+                </div>
+            </div>
+
+            <!-- Cover Image -->
+            <img src="../assets/images/minesweeper.png" alt="ARM Minesweeper cover art"
+                class="project-hero-img fade-in fade-in-delay-1" />
+
+            <!-- Project Title -->
+            <h1 class="fade-in fade-in-delay-2">ARM Minesweeper</h1>
+
+            <!-- Tags -->
+            <div class="project-meta fade-in fade-in-delay-2">
+                <span class="tag-pill">ARM Assembly</span>
+                <span class="tag-pill">Completed</span>
+                <span class="tag-pill">University</span>
+            </div>
+
+            <!-- Project Body -->
+            <div class="project-body fade-in fade-in-delay-3">
+
+                <!-- Overview -->
+                <h2>Overview</h2>
+                <p>
+                    Building Minesweeper in raw ARM Assembly was one of the most rewarding low-level systems projects I
+                    undertook at university. The goal was to construct a fully functional, interactive game running on a
+                    simulated 32-bit ARM processor inside the <span style="color: var(--clr-accent);">Komodo</span> GUI
+                    emulator.
+                </p>
+
+                <figure>
+                    <img src="../assets/images/komodo-gui.png" alt="Komodo Emulator GUI Debugger" />
+                    <figcaption>Komodo GUI emulator showing register bank state, assembly source, and disassembly
+                    </figcaption>
+                </figure>
+
+                <p>
+                    Instead of relying on modern graphics frameworks, the game interface is rendered entirely in ASCII
+                    in a
+                    terminal-like I/O window. The game takes place on an 8 × 8 grid containing 8 randomly placed mines.
+                    Players enter 2D coordinates (such as <code>2,1</code>) to uncover squares, attempting to reveal all
+                    56 safe cells without detonating a mine.
+                </p>
+
+                <figure>
+                    <img src="../assets/images/minesweeper-gui.png" alt="Minesweeper Features Terminal GUI" />
+                    <figcaption>The ASCII Minesweeper game rendering inside the Komodo terminal window</figcaption>
+                </figure>
+
+                <!-- Design -->
+                <h2>Design</h2>
+                <p>
+                    Without high-level abstractions or dynamic memory allocators, designing the memory layout was the
+                    most
+                    critical step. I represented the 64 board squares in memory as a contiguous array of 32-bit integers
+                    stored in row-major order.
+                </p>
+                <p>
+                    Because each cell occupies 4 bytes, converting a 2D coordinate <code>(r, c)</code> into a memory
+                    offset
+                    was accomplished efficiently using bitwise arithmetic:
+                </p>
+                <p style="text-align: center; font-family: var(--font-mono); color: var(--clr-accent);">
+                    Index = 8 × r + c &nbsp;&nbsp;|&nbsp;&nbsp; Memory Offset = (8r + c) &lt;&lt; 2
+                </p>
+                <p>
+                    To cleanly manage game state, I implemented two parallel 64-word arrays:
+                </p>
+                <ul>
+                    <li><strong>Board Array:</strong> Stores the underlying cell values—<code>0</code> for empty spaces,
+                        <code>1</code>–<code>8</code> for surrounding mine counts, and <code>-1</code> for mines.
+                    </li>
+                    <li><strong>Board Mask Array:</strong> Tracks square visibility—<code>0</code> indicates a revealed
+                        square
+                        (displaying its actual contents), while non-zero values keep the square covered under a
+                        <code>#</code>.
+                    </li>
+                </ul>
+
+                <!-- Implementation -->
+                <h2>Implementation</h2>
+                <p>
+                    To keep the assembly codebase modular and readable, I broke the logic into discrete assembly source
+                    files
+                    included into the main entry point (<code>minesweeper.s</code>):
+                </p>
+                <ul>
+                    <li><strong>Procedural Mine Generation (<code>generateBoard.s</code>):</strong> Uses a pseudo-random
+                        generator (<code>randu</code>) to select random indices, places 8 non-overlapping mines, and
+                        increments adjacent cell counters.</li>
+                    <li><strong>Input Parsing &amp; Validation (<code>boardSquareInput.s</code>):</strong> Handles
+                        terminal
+                        input via software interrupts (<code>SWI 1</code>), parses <code>row,col</code> strings,
+                        validates
+                        bounds, and returns the calculated linear index.</li>
+                    <li><strong>ASCII Renderer (<code>printMaskedBoard.s</code>):</strong> Iterates through the mask
+                        array
+                        to conditionally display hidden hashes or revealed numbers using <code>SWI 0</code> (character
+                        output) and <code>SWI 4</code> (integer output).</li>
+                </ul>
+
+                <p>
+                    Strict adherence to the <strong>ARM Procedure Call Standard (APCS)</strong> was vital. Subroutines
+                    pass arguments through <code>R0</code>–<code>R3</code> and use <code>STMFD</code>/<code>LDMFD</code>
+                    stack operations to preserve registers <code>R4</code>–<code>R11</code> and <code>LR</code>. This
+                    guaranteed that nested function calls (like invoking <code>randu</code> inside the board generator)
+                    executed cleanly without register corruption.
+                </p>
+
+                <figure>
+                    <img src="../assets/images/minesweeper-komodo.png"
+                        alt="Minesweeper running side-by-side in Komodo emulator" />
+                    <figcaption>Side-by-side execution environment: game terminal (left) alongside instruction stepping
+                        (right)</figcaption>
+                </figure>
+
+                <!-- Reflections -->
+                <h2>Reflections</h2>
+                <p>
+                    This was one of the most enjoyable projects during my time at university. The project built itself
+                    up logically and the GUI
+                    was extremely helpful with its instruction stepper and register bank monitor. Debugging would have
+                    been much more difficult without it!
+                    It enabled me to have a much better understanding of how low-level code executes under the hood,
+                    directly seeing how the code manipulated memory and changed register values.
+                </p>
+
+                <p>
+                    The biggest challenges were pointer arithmetic in memory and ensuring that registers were used
+                    optimally. The use of the stack ensured that a minimal number of registers were used.
+                </p>
+
+            </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <p>Last updated: Loading...</p>
+    </footer>
+
+    <script src="../tags.js"></script>
+    <script src="../script.js"></script>
+</body>
+
+</html>
