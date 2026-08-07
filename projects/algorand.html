@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Modifying Algorand's consensus mechanism to solve the non-attribution flaw" />
+  <title>Accountability in Algorand — Viren Vadhvana</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body>
+
+  <!-- GLOBAL HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="../" class="site-logo">Viren Vadhvana</a>
+      <nav class="site-nav">
+        <a href="../projects" class="nav-link">Projects</a>
+        <a href="../about" class="nav-link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="page-content">
+    <div class="container project-page">
+
+      <!-- Header Nav: Back Link (Left) & Demo/GitHub Links (Right) -->
+      <div class="project-header-nav fade-in">
+        <a href="../projects" class="back-link">
+          ← Back to Projects
+        </a>
+
+        <div class="project-links">
+          <a href="#" class="btn btn-primary">View on GitHub →</a>
+        </div>
+      </div>
+
+      <!-- Cover Image -->
+      <img src="../assets/images/algorand.png" alt="Accountability in Algorand cover art"
+        class="project-hero-img fade-in fade-in-delay-1" />
+
+      <!-- Project Title -->
+      <h1 class="fade-in fade-in-delay-2">Accountability in Algorand</h1>
+
+      <!-- Tags -->
+      <div class="project-meta fade-in fade-in-delay-2">
+        <span class="tag-pill">University</span>
+        <span class="tag-pill">Completed</span>
+        <span class="tag-pill">Security</span>
+        <span class="tag-pill">Blockchain</span>
+        <span class="tag-pill">Python</span>
+      </div>
+
+      <!-- Project Body -->
+      <div class="project-body fade-in fade-in-delay-3">
+
+        <!-- Overview -->
+        <h2>Overview</h2>
+        <p>
+          As part of my final year research project, I focused on addressing the non-attribution flaw in Algorand's
+          consensus mechanism. In the original protocol, malicious behaviour is not possible to attribute to specific
+          actors due to the use of Verifiable Random Functions (VRFs) for committee selection.
+        </p>
+        <p>
+          I introduced Timed VRFs to reveal the selected leader alongside a reputation-based system to disincentivise
+          malicious behaviours such as block withholding and reward honest behaviour.
+          The reputation metric was used as a weight to a node's stake resulting in a "Proof of Effective Stake" system.
+          I then simulated several adversarial models concluding that the system effectively and significantly reduced
+          adversarial behaviour
+          but encouraged reputation-grinding attacks, allowing malicious nodes controlling less than 1/3 of the total
+          stake to have an effective stake of more than 1/3.
+          This means that the Byzantine Fault Tolerance (the maximum proportion of stake which adversaries may control
+          for the system to remain secure)
+          was modified from 1/3 of the total stake to 1/3 of the total <b>effective</b> stake.
+
+        </p>
+
+        <!-- Design -->
+        <h2>Design</h2>
+        <h2>Implementation</h2>
+        <h2>Results</h2>
+
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>Last updated: August 2026</p>
+  </footer>
+
+  <script src="../tags.js"></script>
+  <script src="../script.js"></script>
+</body>
+
+</html>
