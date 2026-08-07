@@ -324,6 +324,7 @@ p {
 
 .page-header p {
   font-size: 1.05rem;
+  max-width: 100%;
 }
 
 /* Search and filter*/
@@ -882,12 +883,19 @@ p {
 .site-footer {
   position: relative;
   z-index: 1;
-  text-align: center;
-  padding: var(--sp-6) var(--sp-4);
+  padding: var(--sp-6) 0;
   border-top: 1px solid var(--clr-border);
   color: var(--clr-text-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
+}
+
+.site-footer p {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: calc(var(--sp-6) * 0.888);
+  text-align: left;
 }
 
 /* Animations */
