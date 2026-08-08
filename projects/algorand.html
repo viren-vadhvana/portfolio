@@ -60,12 +60,18 @@
         <h2>Overview</h2>
         <p>
           As part of my final year research project, I focused on addressing the non-attribution flaw in Algorand's
-          consensus mechanism. In the original protocol, malicious behaviour is not possible to attribute to specific
-          actors due to the use of Verifiable Random Functions (VRFs) for committee selection.
+          consensus mechanism.
+          The original protocol uses Verifiable Random Functions (VRFs), effectively acting as a lottery to secretly
+          select leaders
+          who are responsible for proposing the next block to be added to the blockchain.
+          The probability of being selected is proportional to the stake held by a node.
+          While VRFs are effective at maintaining secrecy, the system facilitates malicious behaviour such as block
+          withholding (staying silent to stall the chain)
+          as such actions cannot be traced back to the malicious actor.
         </p>
         <p>
           I introduced Timed VRFs to reveal the selected leader alongside a reputation-based system to disincentivise
-          malicious behaviours such as block withholding and reward honest behaviour.
+          malicious behaviour such as block withholding and reward honest behaviour.
           The reputation metric was used as a weight to a node's stake resulting in a "Proof of Effective Stake" system.
           I then simulated several adversarial models concluding that the system effectively and significantly reduced
           adversarial behaviour
@@ -79,8 +85,132 @@
 
         <!-- Design -->
         <h2>Design</h2>
+        <p>
+          Algorand is popular for being a fast, scalable, and decentralised blockchain platform - solving the
+          "Blockchain Trilemma".
+          To bring accountability to Algorand’s consensus without sacrificing its signature speed and anonymity, I
+          explored how to introduce <strong>leader revelation</strong> to solve the non-attribution flaw—ensuring
+          misbehaving nodes that withhold blocks can be unmasked and penalised.
+          However, to prevent targetted attacks, the identity of the leader had to remain secret until they proposed a
+          block or timed out.
+        </p>
+        <p>
+          There are three main mechanisms to introduce leader revelation into secret sortition:
+        </p>
+        <ul>
+          <li><strong>Threshold Cryptography & Secret Sharing:</strong> A committee of nodes split a secret key and must
+            cooperate to reconstruct the seed and reveal the leader. While robust, this requires complex interactive
+            communication rounds that introduce heavy network latency and break Algorand's non-interactive philosophy.
+          </li>
+          <figure>
+            <img src="../assets/images/secret-sharing.png" alt="Secret sharing" />
+            <figcaption>A secret can be wholly reconstructed by a subset of the original creators</figcaption>
+          </figure>
+          <li><strong>Incentive-Based Key Disclosure:</strong> Validators periodically publish private key material
+            after rounds complete, allowing auditors to re-evaluate historical VRF outputs. However, this offers weak
+            real-time accountability if an adversary gains more strategic value from withholding than the financial loss
+            of delayed disclosure.</li>
+          <li><strong>Delay-Based Trapdoors (Chosen Approach):</strong> Using <strong>Verifiable Delay Functions
+              (VDFs)</strong> or Time-Lock Puzzles, the leader's identity is locked inside a sequential mathematical
+            puzzle. If the leader acts honestly, they immediately reveal themselves. If they stay silent, the rest of
+            the network can non-interactively "force open" the puzzle after a predictable time delay.</li>
+        </ul>
+
+
+        <p>
+          Building on delay-based trapdoors, I designed a hybrid architecture combining VDFs with a dynamic
+          <strong>Proof-of-Effective-Stake (PoES)</strong> reputation model, splitting consensus into two cryptographic
+          pathways:
+        </p>
+        <ul>
+          <li><strong>The Fast Path:</strong> Honest leaders secretly self-select via Algorand’s standard Verifiable
+            Random Function (VRF) and immediately broadcast their block alongside an instant cryptographic proof as in
+            the standard Algorand protocol.</li>
+          <li><strong>The Slow Auditing Path:</strong> If a selected leader decides to maliciously withhold a block,
+            non-leader nodes run a strictly sequential VDF math computation (the
+            complexity is configurable, I set this as ~10s delay to provide security against Algorand's ~4s round time).
+            Because VDF evaluation cannot be parallelised, it acts as a time-delay trapdoor that eventually unmasks the
+            withholding leader's identity without requiring multi-party interactions or voluntary key releases.</li>
+        </ul>
+        <figure>
+          <img src="../assets/images/poes-paths.png" alt="Example using timed VRF showing fast path vs slow path" />
+          <figcaption>Simple example using timed VRF demonstrating the fast path trapdoor shortcut versus the slow
+            sequential
+            squaring path.</figcaption>
+        </figure>
+        <p>
+          With this new feature, we can determine who the selected leader was when a block is withheld. However, there
+          is still no
+          disincentivisation of this behaviour. Thus, I introduced a simple reputation system where each node is given a
+          reputation value used to weight the value of the node's stake, impacting its probability of being selected as
+          a
+          leader in the next round. The system must simultaneously penalise persistent malicious behaviour and provide a
+          tolerance for accidental disconnects.
+          Furthermore, it should be resistant to Sybil re-entry/whitewashing attacks where stake is transferred to new
+          nodes with fresh and untarnished reputation.
+        </p>
+
+        <!-- Implementation -->
         <h2>Implementation</h2>
+        <p>
+          To model and validate the protocol’s effectiveness, I implemented a discrete-event Monte Carlo simulation
+          using Python. The simulation was designed to replicate Algorand's secret sortition process over multiple
+          rounds,
+          allowing for the testing of various adversarial strategies and network conditions. By abstracting the full
+          stack
+          into key variables—stake, reputation, leader selection, and block proposal—the model could evaluate system
+          behaviour under controlled, repeatable conditions.
+          The simulation evaluated the protocol across a range of network sizes and adversarial conditions, running up
+          to
+          10,000 rounds per trial. The results were used to analyse the impact of the proposed reputation
+          system
+          on network security and efficiency, and to compare the modified protocol against the baseline Algorand
+          consensus mechanism.
+        </p>
+        <p>
+          The reputation model had several simple features: used a linear increase in reputation for successful block
+          proposals, and an exponential
+          decrease for withheld blocks. The model was designed to be resistant to Sybil and whitewashing attacks, and to
+          provide
+          a
+          tolerance for accidental disconnects.
+        </p>
+        <ul>
+          <li><strong>Sliding History Window:</strong> Each node tracks its last 100 block proposals in a sliding window
+            vector (1 for withholding strike, 0 for successful publication).</li>
+          <li><strong>Exponential Penalty Function:</strong> Instead of simple linear deductions, penalties scale
+            exponentially using <code>P(s) = max(0, 1.5<sup>s</sup> - 5)</code> where <code>s</code> is cumulative
+            strikes. This prevents accidental network drops (~5% baseline noise) from destroying reputation while
+            heavily punishing recurring attacks.</li>
+          <li><strong>Sybil & Whitewashing Defenses:</strong> New nodes join with a starting reputation floor of 0.75
+            and 4 pre-filled strikes, raising the barrier to entry for malicious nodes attempting to discard
+            low-reputation identities and re-enter fresh.</li>
+          <li><strong>Adversarial Models:</strong> Simulated several threat models including <em>Disruptive</em> (pure
+            withholding/vote stalling), <em>Hegemonic</em> (greedy strategic withholding to maximize re-election),
+            <em>Defaming</em> (tarnish honest nodes via committee voting), and <em>Computational</em> adversaries.
+          </li>
+        </ul>
+
+        <!-- Results -->
         <h2>Results</h2>
+        <p>
+          The simulation results demonstrated clear statistical improvements over standard Pure Proof-of-Stake (PPoS):
+        </p>
+        <ul>
+          <li><strong>Up to 90% Reduction in Block Withholding:</strong> Under strategic (hegemonic) attacks, total
+            withheld blocks dropped from 339 in PPoS down to 184 in PoES over 1,000 rounds, while successful block
+            confirmations increased from 618 to 807.</li>
+          <li><strong>Rapid Reputation Isolation:</strong> Disruptive nodes attempting to stall the network saw their
+            reputation rapidly fall to the minimum floor (0.01), effectively stripping them of leadership and validator
+            selection chances. Honest nodes stabilized cleanly between 0.95 and 1.00.</li>
+          <li><strong>Neutralizing Look-Ahead Bias:</strong> Strategic withholding to manipulate future VRF seeds became
+            mathematically unviable; malicious win-rates oscillated tightly back down to their fair stake proportion
+            line.</li>
+          <li><strong>New Insight on Effective BFT:</strong> The research proved that introducing reputation shifts the
+            security boundary: Byzantine Fault Tolerance changes from 1/3 of <em>total stake</em> to 1/3 of <em>total
+              effective stake</em>, demonstrating how reputation metrics must be guarded against computational and
+            defaming exploits.</li>
+        </ul>
 
 
       </div>
